@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Coinpayments\Message;
+namespace Omnipay\Eshoppayment\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
@@ -13,67 +13,12 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	protected $liveEndpoint = "http://www.helloyoushop.com/card/doPay";
 
 	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setAddress($value) {
-		return $this->setParameter('address', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getAddress() {
-		return $this->getParameter('address');
-	}
-
-	/**
 	 * @param \Omnipay\Common\CreditCard $value
 	 *
 	 * @return AbstractRequest|BaseAbstractRequest
 	 */
 	public function setCard($value) {
 		return $this->setParameter('card', $value);
-	}
-
-	/**
-	 * @return mixed|\Omnipay\Common\CreditCard
-	 */
-	public function getCard() {
-		return $this->getParameter('card');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setCity($value) {
-		return $this->setParameter('city', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getCity() {
-		return $this->getParameter('city');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setCountry($value) {
-		return $this->setParameter('country', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getCountry() {
-		return $this->getParameter('country');
 	}
 
 	/**
@@ -86,90 +31,12 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @return mixed
-	 */
-	public function getEmail() {
-		return $this->getParameter('email');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setFirstName($value) {
-		return $this->setParameter('firstName', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getFirstName() {
-		return $this->getParameter('firstName');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setLastName($value) {
-		return $this->setParameter('lastName', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getLastName() {
-		return $this->getParameter('lastName');
-	}
-
-	/**
 	 * @param $value
 	 *
 	 * @return AbstractRequest
 	 */
 	public function setMerOrderNo($value) {
 		return $this->setParameter('merOrderNo', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getMerOrderNo() {
-		return $this->getParameter('merOrderNo');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setOrderPrice($value) {
-		return $this->setParameter('orderPrice', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getOrderPrice() {
-		return $this->getParameter('orderPrice');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setPhone($value) {
-		return $this->setParameter('phone', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getPhone() {
-		return $this->getParameter('phone');
 	}
 
 	/**
@@ -182,58 +49,12 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @return mixed
-	 */
-	public function getProductInfo() {
-		return $this->getParameter('productInfo');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setState($value) {
-		return $this->setParameter('state', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getState() {
-		return $this->getParameter('state');
-	}
-
-	/**
-	 * @param $value
-	 *
-	 * @return AbstractRequest
-	 */
-	public function setZipCode($value) {
-		return $this->setParameter('zipCode', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getZipCode() {
-		return $this->getParameter('zipCode');
-	}
-
-	/**
 	 * @param $value
 	 *
 	 * @return AbstractRequest
 	 */
 	public function setUserNo($value) {
 		return $this->setParameter('userNo', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getUserNo() {
-		return $this->getParameter('userNo');
 	}
 
 	/**
@@ -246,26 +67,12 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @return mixed
-	 */
-	public function getIp() {
-		return $this->getParameter('ip');
-	}
-
-	/**
 	 * @param $value
 	 *
 	 * @return AbstractRequest
 	 */
 	public function setRequestUrl($value) {
 		return $this->setParameter('requestUrl', $value);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getRequestUrl() {
-		return $this->getParameter('requestUrl');
 	}
 
 	/**
@@ -277,6 +84,24 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 		return $this->setParameter('language', $value);
 	}
 
+	public function setPaySecret($value) {
+		return $this->setParameter('paySecret', $value);
+	}
+
+	/**
+	 * @return mixed|\Omnipay\Common\CreditCard
+	 */
+	public function getCard() {
+		return $this->getParameter('card');
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEmail() {
+		return $this->getParameter('email');
+	}
+
 	/**
 	 * @return mixed
 	 */
@@ -285,19 +110,75 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @param string $value
-	 *
-	 * @return AbstractRequest|BaseAbstractRequest
+	 * @return mixed
 	 */
-	public function setCurrency($value) {
-		return $this->setParameter('currency', $value);
+	public function getUserNo() {
+		return $this->getParameter('userNo');
 	}
 
 	/**
-	 * @return mixed|string
+	 * @return mixed
 	 */
-	public function getCurrency() {
-		return $this->getParameter('currency');
+	public function getMerOrderNo() {
+		return $this->getParameter('merOrderNo');
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getProductInfo() {
+		return $this->getParameter('productInfo');
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getRequestUrl() {
+		return $this->getParameter('requestUrl');
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getIp() {
+		return $this->getParameter('ip');
+	}
+
+	/**
+	 * @param $req
+	 * @param $cmd
+	 *
+	 * @return string
+	 */
+	protected function getSign($data) {
+		$data['paySecret'] = $this->getPaySecret();
+		$str               = htmlspecialchars(http_build_query($data));
+		$sign              = strtoupper(md5($str));
+		return $sign;
+	}
+
+	public function getPaySecret() {
+		return $this->getParameter('paySecret');
+	}
+
+	/**
+	 * @param $data
+	 *
+	 * @return mixed
+	 */
+	protected function curlPost($data) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $this->getEndpoint());
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return json_decode($result, 1);
 	}
 
 	/**

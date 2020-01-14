@@ -1,9 +1,6 @@
 <?php
 
-namespace Omnipay\Coinpayments\Message;
-
-use GuzzleHttp\Exception\BadResponseException;
-
+namespace Omnipay\Eshoppayment\Message;
 /**
  * Class PurchaseRequest
  * @package Omnipay\Coinpayments\Message
@@ -15,32 +12,36 @@ class PurchaseRequest extends AbstractRequest {
 	 * @throws \Omnipay\Common\Exception\InvalidRequestException
 	 */
 	public function getData() {
-		$this->validate('amount', 'currency1', 'currency2');
 		return [
-			'cmd'         => 'create_transaction',
-			'amount'      => $this->getAmount(),
-			'currency1'   => $this->getCurrency1(),
-			'currency2'   => $this->getCurrency2(),
-			'address'     => $this->getAddress(),
-			'buyer_email' => $this->getBuyerEmail(),
-			'buyer_name'  => $this->getBuyername(),
-			'item_name'   => $this->getItemName(),
-			'item_number' => $this->getItemNumber(),
-			'invoice'     => $this->getInvoice(),
-			'custom'      => $this->getCustom(),
-			'ipn_url'     => $this->getIPNUrl(),
-		];
-	}
-
-	/**
-	 * @param $hmac
-	 *
-	 * @return array
-	 */
-	protected function getHeaders($hmac) {
-		return [
-			'HMAC'         => $hmac,
-			'Content-Type' => 'application/x-www-form-urlencoded',
+			'address'           => $this->getCard()->getAddress1(),
+			'cardNum'           => $this->getCard()->getNumber(),
+			'city'              => $this->getCard()->getCity(),
+			'country'           => $this->getCard()->getCountry(),
+			'cvv2'              => $this->getCard()->getCvv(),
+			'firstName'         => $this->getCard()->getFirstName(),
+			'lastName'          => $this->getCard()->getLastName(),
+			'month'             => $this->getCard()->getExpiryMonth() < 10 ? '0' . $this->getCard()->getExpiryMonth() : $this->getCard()->getExpiryMonth(),
+			'phone'             => $this->getCard()->getPhone(),
+			'shippingAddress'   => $this->getCard()->getAddress1(),
+			'shippingCity'      => $this->getCard()->getCity(),
+			'shippingCountry'   => $this->getCard()->getCountry(),
+			'shippingFirstName' => $this->getCard()->getFirstName(),
+			'shippingLastName'  => $this->getCard()->getLastName(),
+			'shippingState'     => $this->getCard()->getState(),
+			'shippingTelephone' => $this->getCard()->getPhone(),
+			'shippingZipcode'   => $this->getCard()->getPostcode(),
+			'state'             => $this->getCard()->getState(),
+			'year'              => $this->getCard()->getExpiryYear(),
+			'zipCode'           => $this->getCard()->getPostcode(),
+			'currency'          => $this->getCurrency(),
+			'email'             => $this->getEmail(),
+			'language'          => $this->getLanguage(),
+			'userNo'            => $this->getUserNo(),
+			'merOrderNo'        => $this->getMerOrderNo(),
+			'orderPrice'        => $this->getAmount(),
+			'productInfo'       => $this->getProductInfo(),
+			'requestUrl'        => $this->getRequestUrl(),
+			'ip'                => $this->getIp(),
 		];
 	}
 
@@ -50,17 +51,10 @@ class PurchaseRequest extends AbstractRequest {
 	 * @return PurchaseResponse|\Omnipay\Common\Message\ResponseInterface
 	 */
 	public function sendData($data) {
-		$hmac = $this->getSig($data, 'create_transaction');
-		$data['version'] = 1;
-		$data['cmd']     = 'create_transaction';
-		$data['key']     = $this->getPublicKey();
-		$data['format']  = 'json';
-		try {
-			$response = $this->httpClient->request('POST', $this->getEndpoint(), $this->getHeaders($hmac), http_build_query($data));
-		} catch (BadResponseException $e) {
-			$response = $e->getResponse();
-		}
-		$result = json_decode($response->getBody()->getContents(), true);
-		return new PurchaseResponse($this, $result);
+		ksort($data);
+		$data         = array_filter($data);
+		$data['sign'] = $this->getSign($data);
+		$response     = $this->curlPost($data);
+		return new PurchaseResponse($this, $response);
 	}
 }

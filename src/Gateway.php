@@ -4,8 +4,7 @@ namespace Omnipay\Eshoppayment;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Eshoppayment\Message\Gateway\PurchaseRequest;
-use Omnipay\Eshoppayment\Message\Gateway\TransactionRequest;
+use Omnipay\Eshoppayment\Message\PurchaseRequest;
 
 class Gateway extends AbstractGateway {
 

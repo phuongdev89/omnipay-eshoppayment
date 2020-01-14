@@ -1,6 +1,6 @@
-Omnipay for Voguepay
+Omnipay for Eshoppayment
 ====================
-Omnipay for Voguepay
+Omnipay for Eshoppayment
 
 Installation
 ------------
@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist navatech/omnipay-voguepay "*"
+php composer.phar require --prefer-dist navatech/omnipay-eshoppayment "*"
 ```
 
 or add
 
 ```
-"navatech/omnipay-voguepay": "*"
+"navatech/omnipay-eshoppayment": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -27,7 +27,7 @@ Usage
 
 The following gateways are provided by this package:
 
-* Voguepay
+* Eshoppayment
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
@@ -37,41 +37,40 @@ repository.
 ### Create payment url
 
 ```php
-$gateway = Omnipay::create('Voguepay');
+use Omnipay\Common\CreditCard;
+use Omnipay\Eshoppayment\Gateway;
+use Omnipay\Omnipay;
 
-$gateway->initialize(array(
-    'demo' => true,
-    'v_merchant_id' => ''
-));
-
-$response = $gateway->payUrl([
-    'total' => 10.00,
-    'memo' => 'Payment description',
-    'cur' => 'USD',
-    'merchant_ref' => 'Your payment identity',
+$command = Omnipay::create(Gateway::NAME);
+$command->initialize([
+    'userNo'    => '11131553',
+    'paySecret' => 'ffu6uu91888843660123x544oo6ccbwx',
+]);
+$card     = new CreditCard([
+    'firstName'   => 'Alexa',
+    'lastName'    => 'Smith',
+    'number'      => '4200000000000000',
+    'cvv'         => '000',
+    'expiryMonth' => '09',
+    'expiryYear'  => '23',
+    'state'       => 'Hanoi',
+    'postcode'    => '100000',
+    'address1'    => 'No 1208 CT 4-5 Yen Hoa',
+    'city'        => 'Cau Giay',
+    'country'     => 'VN', //ansi country code
+]);
+$response = $command->purchase([
+    'card'        => $card,
+    'currency'    => 'USD',
+    'email'       => 'test@gmail.com',
+    'language'    => 'en',
+    'merOrderNo'  => 1,//unique id of order
+    'amount'      => 10,
+    'productInfo' => 'Test 10 do',
+    'requestUrl'  => 'http://google.com',
+    'ip'          => '0.0.0.0', //Your client real ip address
 ])->send();
-
-if ($response->isSuccessful()) {
-    $data = $response->getData(); 
-}
-```
-
-### Get transaction detail
-
-```php
-$gateway = Omnipay::create('Voguepay');
-
-$gateway->initialize(array(
-    'demo' => true,
-    'v_merchant_id' => ''
-));
-
-$response = $gateway->transaction([
-    'v_transaction_id' => '9GAS78ETG',
-    'type' => 'json',
-])->send();
-
-if ($response->isSuccessful()) {
-    $data = $response->getData(); 
-}
+echo '<pre>';
+print_r($response->getData());
+die;
 ```

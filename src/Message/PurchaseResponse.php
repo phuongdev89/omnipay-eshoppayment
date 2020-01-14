@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Coinpayments\Message;
+namespace Omnipay\Eshoppayment\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
@@ -13,69 +13,60 @@ class PurchaseResponse extends AbstractResponse {
 	 * @return bool
 	 */
 	public function isSuccessful() {
-		return isset($this->data['error']) && $this->data['error'] == 'ok';
+		return isset($this->data['code']) && $this->data['code'] == '0000';
 	}
 
 	/**
 	 * @return mixed
 	 */
 	public function getAmount() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['amount'];
+		if (isset($this->data['amount'])) {
+			return $this->data['amount'];
 		}
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getAddress() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['address'];
-		}
-	}
-
-	/**
-	 * @return mixed|string
-	 */
-	public function getTransactionId() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['txn_id'];
+	public function getMerOrderNo() {
+		if (isset($this->data['merOrderNo'])) {
+			return $this->data['merOrderNo'];
 		}
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getConfirms() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['confirms_needed'];
+	public function getOrderNo() {
+		if (isset($this->data['orderNo'])) {
+			return $this->data['orderNo'];
 		}
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getTimeout() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['timeout'];
+	public function getMerNo() {
+		if (isset($this->data['merNo'])) {
+			return $this->data['merNo'];
 		}
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getStatusUrl() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['status_url'];
+	public function getCurrency() {
+		if (isset($this->data['currency'])) {
+			return $this->data['currency'];
 		}
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getQRCodeUrl() {
-		if (isset($this->data['result'])) {
-			return $this->data['result']['qrcode_url'];
+	public function getTradeTime() {
+		if (isset($this->data['tradeTime'])) {
+			return $this->data['tradeTime'];
 		}
 	}
 
