@@ -13,7 +13,7 @@ class PurchaseResponse extends AbstractResponse {
 	 * @return bool
 	 */
 	public function isSuccessful() {
-		return isset($this->data['code']) && $this->data['code'] == '0000';
+		return isset($this->data['code']);
 	}
 
 	/**
@@ -77,6 +77,32 @@ class PurchaseResponse extends AbstractResponse {
 	 */
 	public function isRedirect() {
 		return false;
+	}
+
+	/**
+	 * @return mixed|string|null
+	 */
+	public function getCode() {
+		return $this->data['code'];
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getMessage() {
+		switch ($this->data['code']) {
+			case '0000':
+				return 'Transaction successful';
+			case '2222':
+				return 'Transaction Failed - Card issue risk control';
+			case '3333':
+				return 'Request missing params';
+			case  '4444':
+				return 'Transaction Failed';
+			case  '9999':
+			default:
+				return 'System busy';
+		}
 	}
 
 	/**

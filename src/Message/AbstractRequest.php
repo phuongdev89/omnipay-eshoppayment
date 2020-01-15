@@ -2,6 +2,7 @@
 
 namespace Omnipay\Eshoppayment\Message;
 
+use Omnipay\Common\CreditCard;
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 /**
@@ -13,7 +14,7 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	protected $liveEndpoint = "http://www.helloyoushop.com/card/doPay";
 
 	/**
-	 * @param \Omnipay\Common\CreditCard $value
+	 * @param CreditCard $value
 	 *
 	 * @return AbstractRequest|BaseAbstractRequest
 	 */
@@ -89,7 +90,7 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @return mixed|\Omnipay\Common\CreditCard
+	 * @return mixed|CreditCard
 	 */
 	public function getCard() {
 		return $this->getParameter('card');
@@ -145,16 +146,20 @@ abstract class AbstractRequest extends BaseAbstractRequest {
 	}
 
 	/**
-	 * @param $req
-	 * @param $cmd
+	 * @param array $input
 	 *
 	 * @return string
 	 */
-	protected function getSign($data) {
-		$data['paySecret'] = $this->getPaySecret();
-		$str               = htmlspecialchars(http_build_query($data));
-		$sign              = strtoupper(md5($str));
-		return $sign;
+	protected function getSign($input) {
+		$input['paySecret'] = $this->getPaySecret();
+		$buff               = "";
+		foreach ($input as $k => $v) {
+			if ($v != "" && !is_array($v)) {
+				$buff .= $k . "=" . $v . "&";
+			}
+		}
+		$buff = trim($buff, "&");
+		return strtoupper(md5($buff));
 	}
 
 	public function getPaySecret() {

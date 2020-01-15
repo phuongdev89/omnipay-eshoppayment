@@ -4,8 +4,20 @@ namespace Omnipay\Eshoppayment;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\Message\RequestInterface;
 use Omnipay\Eshoppayment\Message\PurchaseRequest;
 
+/**
+ * @method RequestInterface authorize(array $options = array())
+ * @method RequestInterface completeAuthorize(array $options = array())
+ * @method RequestInterface capture(array $options = array())
+ * @method RequestInterface completePurchase(array $options = array())
+ * @method RequestInterface refund(array $options = array())
+ * @method RequestInterface void(array $options = array())
+ * @method RequestInterface createCard(array $options = array())
+ * @method RequestInterface updateCard(array $options = array())
+ * @method RequestInterface deleteCard(array $options = array())
+ */
 class Gateway extends AbstractGateway {
 
 	const NAME = 'Eshoppayment';
@@ -62,7 +74,7 @@ class Gateway extends AbstractGateway {
 	/**
 	 * @param array $parameters
 	 *
-	 * @return AbstractRequest|PayUrlRequest
+	 * @return AbstractRequest|PurchaseRequest
 	 */
 	public function purchase($parameters = []) {
 		return $this->createRequest(PurchaseRequest::class, $parameters);
