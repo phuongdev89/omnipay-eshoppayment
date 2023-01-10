@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist navatech/omnipay-eshoppayment "*"
+php composer.phar require --prefer-dist phuongdev89/omnipay-eshoppayment "*"
 ```
 
 or add
 
 ```
-"navatech/omnipay-eshoppayment": "*"
+"phuongdev89/omnipay-eshoppayment": "*"
 ```
 
 to the require section of your `composer.json` file.
